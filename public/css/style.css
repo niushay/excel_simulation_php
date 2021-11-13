@@ -1,0 +1,17 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+
+thead tr:nth-child(1) th, tr{
+    text-align: center;
+}
+
+tbody th {
+    writing-mode: tb-rl;
+    transform: rotate(180deg);
+    text-align: center;
+    transform-origin: center;
+}
+
