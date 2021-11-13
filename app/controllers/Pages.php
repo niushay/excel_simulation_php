@@ -29,5 +29,9 @@
             //Insert data into the table
             $this -> dataModel -> storeData($data);
 
+            return [
+                'status' => true,
+                'message' => 'Data have been inserted successfully'
+            ];
         }
     }

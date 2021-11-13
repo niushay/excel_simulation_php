@@ -170,9 +170,10 @@
                 colArray.push(cols)
             });
 
-            $.post( "store", { data: colArray, sheet: 1})
+            $.post( "pages/store", { data: colArray, sheet: 1})
                 .done(function( data ) {
-                    console.log( "Data Loaded: " + data );
+                    // if(status === true)
+                    //     alert(data['message']);
                 });
         })
     });

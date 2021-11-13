@@ -31,38 +31,34 @@ class Data {
 
     public function storeData($data)
     {
-        $storeDataQuery = "INSERT INTO sheet_" . $data['sheet'];
-        $storeRowArray = [];
+        $storeDataQuery = "INSERT INTO sheet_" . $data['sheet'] . " (";
+
+        foreach ($data['data'][0] as $key=>$value){
+            if($key !== sizeof($data['data'][0]) - 1) {
+                $storeDataQuery .= "col_" . ($key + 1) . ", ";
+            }else {
+                $storeDataQuery .= "col_". ($key + 1) .") VALUES (";
+            }
+        }
+
+        foreach ($data['data'][0] as $key=>$value) {
+            if ($key !== sizeof($data['data'][0]) - 1) {
+                $storeDataQuery .= "? , ";
+            } else {
+                $storeDataQuery .= "? );";
+            }
+        }
+
+        $this->db->query($storeDataQuery);
 
         foreach ($data['data'] as $key=>$value){
-            foreach ($value as $k => $v) {
-                if($key !== sizeof($value) - 1 ) {
-                    $storeDataQuery .= " (col_" . ($k + 1) . ", ";
-                }else {
-                    $storeDataQuery .= "col_". ($k + 1) .") VALUES (";
-                }
-
-                foreach ($value as $k => $v) {
-                    if($key !== sizeof($value) - 1 ) {
-                        $storeDataQuery .= "? , ";
-                    }else{
-                        $storeDataQuery .= "? )";
-                    }
-                }
+            foreach ($data['data'][$key] as $k => $v){
+                $this -> db -> bind($k+1, $v);
             }
-
+            $this -> db -> execute();
         }
-//
-//        foreach ($data['data'] as $key=>$value){
-//            if($key !== sizeof($data['data']) - 1 ) {
-//                $storeDataQuery .= $value . ", ";
-//            }else{
-//                $storeDataQuery .= "";
-//            }
-//        }
 
-        $sql = $this->db->prepare("INSERT INTO sheet_". $data['sheet'] ." (id, type, colour) VALUES (:id, :name, :color)");
-        $sql->execute(array('id' => $newId, 'name' => $name, 'color' => $color));
+        return true;
     }
 
 }
