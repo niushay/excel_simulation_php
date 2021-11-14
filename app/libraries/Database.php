@@ -20,6 +20,7 @@
             }catch (PDOException $e){
                 $this->error = $e -> getMessage();
                 echo $this->error;
+                return false;
             }
         }
 
@@ -61,7 +62,7 @@
         public function single()
         {
             $this->execute();
-            return $this->statement->fetch(PDO::FETCH_OBJ);
+            return $this->statement->fetch(PDO::FETCH_BOUND);
         }
 
         public function rowCount()

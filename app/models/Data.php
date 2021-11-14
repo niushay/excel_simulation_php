@@ -61,4 +61,24 @@ class Data {
         return true;
     }
 
+    public function fetchAll($sheetNumber)
+    {
+        //Check if table exists
+        $table = 'sheet_' . $sheetNumber;
+        try {
+            $this->db->query("SELECT 1 FROM {$table} LIMIT 1");
+            $result = $this->db->execute();
+        } catch (Exception $e) {
+            return false;
+        }
+
+        //Get table data
+        if($result){
+            $stmt = "SELECT * FROM {$table}";
+            $this -> db -> query($stmt);
+            $data = $this -> db -> resultSet();
+        }
+        return $data;
+    }
+
 }

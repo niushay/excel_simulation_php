@@ -7,13 +7,25 @@
             $this -> dataModel = $this -> model('Data');
         }
 
-        public function index()
+        public function index($sheetNumber = 1)
         {
-//            $user = $this -> userModel->getUsers();
-            $data = [
-                'title' => 'Home Page',
-                'name' => 'Dary'
-            ];
+            $data = $this -> dataModel -> fetchAll($sheetNumber);
+
+            if ($data == false){
+                $data = [
+                    'items' => [
+                        ['Text', 'Text', 'Text'],
+                        ['Text', 'Text', 'Text'],
+                        ['Text', 'Text', 'Text']
+                    ],
+                    'numberOfCols' => 4
+                ];
+            }else{
+                $data = [
+                    'items' => $data,
+                    'numberOfCols' => count((array)$data[0])
+                ];
+            }
 
             $this -> view('pages/index', $data);
         }

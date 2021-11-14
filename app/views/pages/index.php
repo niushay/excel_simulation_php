@@ -1,39 +1,32 @@
 <?php require_once 'header.php'?>
-
+<?php $columnNumbers = $data['numberOfCols']?>
 <div class="container" style="margin-top: 3%" xmlns="http://www.w3.org/1999/html">
     <div class="row justify-content-start">
         <div class="col-md-9">
             <table class="table table-borderless table-bordered table-responsive table-sm" id="dataTable">
                 <thead>
                     <tr>
-                        <th id="firstHeader" scope="col" colspan="4">Excel sheet</th>
+                        <th id="firstHeader" scope="col" colspan="<?= $columnNumbers ?>">Excel sheet</th>
                     </tr>
                     <tr>
                         <th></th>
-                        <th>1</th>
-                        <th>2</th>
-                        <th>3</th>
+                        <? if($data['items'] !== '') { ?>
+                            <?php for($i = 0; $i < count((array)$data['items'][0]) - 1; $i++): ?>
+                                <th><?php echo $i + 1?> </th>
+                            <?php endfor;?>
+                        <? } ?>
                     </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <th scope="row" >1</th>
-                    <td contenteditable="true">Text</td>
-                    <td contenteditable="true">Text</td>
-                    <td contenteditable="true">Text</td>
-                </tr>
-                <tr>
-                    <th scope="row" >2</th>
-                    <td contenteditable="true">Text</td>
-                    <td contenteditable="true">Text</td>
-                    <td contenteditable="true">Text</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td contenteditable="true">Text</td>
-                    <td contenteditable="true">Text</td>
-                    <td contenteditable="true">Text</td>
-                </tr>
+                <?php foreach ($data['items'] as $key => $item): ?>
+                    <tr>
+                        <th scope="row" ><?= $key + 1 ?></th>
+                        <?php foreach ($item as $k=>$v): ?>
+                             <?php if($k == 'id') continue ?>
+                            <td contenteditable="true"><?= $v ?></td>
+                        <?php endforeach;?>
+                    </tr>
+                <?php endforeach;?>
                 </tbody>
             </table>
 
@@ -77,9 +70,9 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td>sheet 1</td>
-                    <td>sheet 2</td>
-                    <td>sheet 3</td>
+                    <td><a href="#">sheet 1</a></td>
+                    <td><a href="#">sheet 2</a></td>
+                    <td><a href="#">sheet 3</a></td>
                 </tr>
                 </tbody>
             </table>
