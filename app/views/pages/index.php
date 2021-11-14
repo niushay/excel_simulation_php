@@ -12,6 +12,7 @@
                     <tr>
                         <th class="table-success" id="firstHeader" scope="col" colspan="<?= $columnNumbers ?>">Excel sheet</th>
                     </tr>
+
                     <tr>
                         <th style="width: 20%"></th>
                         <? if($data['items'] !== '') { ?>
