@@ -9,10 +9,9 @@ thead tr:nth-child(1) th, tr{
 }
 
 tbody th {
-    writing-mode: tb-rl;
-    transform: rotate(180deg);
-    text-align: center;
-    transform-origin: center;
+    -webkit-transform: rotate(270deg);
+    -ms-transform: rotate(270deg);
+    transform: rotate(270deg);
 }
 
 a{
