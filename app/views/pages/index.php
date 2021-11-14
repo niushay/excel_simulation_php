@@ -10,7 +10,7 @@
             <table class="table table-borderless table-bordered table-responsive table-sm" id="dataTable">
                 <thead>
                     <tr>
-                        <th id="firstHeader" scope="col" colspan="<?= $columnNumbers ?>">Excel sheet</th>
+                        <th class="table-success" id="firstHeader" scope="col" colspan="<?= $columnNumbers ?>">Excel sheet</th>
                     </tr>
                     <tr>
                         <th style="width: 20%"></th>
