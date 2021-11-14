@@ -9,23 +9,35 @@
 
         public function index($sheetNumber = 1)
         {
+            //Get data of selected sheet
             $data = $this -> dataModel -> fetchAll($sheetNumber);
 
             if ($data == false){
                 $data = [
                     'items' => [
-                        ['Text', 'Text', 'Text'],
-                        ['Text', 'Text', 'Text'],
-                        ['Text', 'Text', 'Text']
+                        [1,'Text', 'Text', 'Text'],
+                        [2,'Text', 'Text', 'Text'],
+                        [3,'Text', 'Text', 'Text']
                     ],
-                    'numberOfCols' => 4
+                    'numberOfCols' => 4,
+                    'sheetNumber' => $sheetNumber
                 ];
             }else{
                 $data = [
                     'items' => $data,
-                    'numberOfCols' => count((array)$data[0])
+                    'numberOfCols' => count((array)$data[0]),
+                    'sheetNumber' => $sheetNumber
                 ];
             }
+
+            //create sheet table
+            $this->createSheet(1);
+
+            //get Number of sheets
+            $data['sheets'] = $this->dataModel->getNumberOfSheets();
+
+            //create sheet table
+//            $this->createSheet(1);
 
             $this -> view('pages/index', $data);
         }
@@ -34,9 +46,13 @@
         {
             //Get Data
            $data = $_POST;
+           print_r($data);
 
-            //Create Table
+            //Create data Table
             $this -> dataModel -> createTable($data);
+
+            //Create sheet Table
+            $this->createSheet($_POST['sheet']);
 
             //Insert data into the table
             $this -> dataModel -> storeData($data);
@@ -45,5 +61,14 @@
                 'status' => true,
                 'message' => 'Data have been inserted successfully'
             ];
+        }
+
+        public function createSheet($data = null)
+        {
+            if($data == null)
+                $data = $_POST['sheet'];
+
+            $this -> dataModel -> createSheetTable($data);
+            $this -> dataModel -> storeCreatedSheets($data);
         }
     }

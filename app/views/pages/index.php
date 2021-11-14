@@ -1,5 +1,6 @@
 <?php require_once 'header.php'?>
 <?php $columnNumbers = $data['numberOfCols']?>
+
 <div class="container" style="margin-top: 3%" xmlns="http://www.w3.org/1999/html">
     <div class="row justify-content-start">
         <div class="col-md-9">
@@ -65,14 +66,14 @@
             <table class="table table-borderless table-bordered">
                 <thead >
                 <tr>
-                    <th scope="col" colspan="4" id="excelSheetFirstHeader">Excel sheet</th>
+                    <th scope="col" colspan="<?php echo sizeof($data['sheets'])?>" id="excelSheetFirstHeader">Excel sheet</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td><a href="#">sheet 1</a></td>
-                    <td><a href="#">sheet 2</a></td>
-                    <td><a href="#">sheet 3</a></td>
+                    <?php foreach ($data['sheets'] as $sheet):?>
+                        <td><a href="<?php echo $sheet['sheet']?>">sheet <?php echo $sheet['sheet']?></a></td>
+                    <?php endforeach;?>
                 </tr>
                 </tbody>
             </table>
@@ -92,6 +93,8 @@
     </div>
 
 </div>
+
+<!--<script type="application/javascript" src=""></script>-->
 
 <script>
     $(document).ready(function() {
@@ -133,22 +136,34 @@
         $("#addNewSheet").click(function(){
             let lastColumnNumber = $("#sheetTable td").length
             lastColumnNumber++
+            console.log(lastColumnNumber)
 
             $('#sheetTable tr').each(function(key) {
                if(key===0){
                     $(this).append("<th></th>");
                 }else{
-                    $(this).append('<td>sheet ' + lastColumnNumber + '</td>');
+                    $(this).append('<td><a href='+lastColumnNumber+'>sheet ' + lastColumnNumber + '</a></td>');
                 }
             });
 
-            //merge columns in the header
             $("#excelSheetFirstHeader").attr('colSpan', lastColumnNumber + 1);
             $("#excelSheetFirstHeader+ th").remove();
+
+            $.post( "pages/createSheet", { sheet: lastColumnNumber}).done(function( data ) {
+                //merge columns in the header
+                // $("#excelSheetFirstHeader").attr('colSpan', lastColumnNumber + 1);
+                // $("#excelSheetFirstHeader+ th").remove();
+            })
+
         })
 
         //Save changes
         $("#save").click(function() {
+            var url = window.location.href
+            var sheetNumber = url.split("/").slice(-1).join("/");
+
+            if(sheetNumber === "")
+                sheetNumber = 1;
             let colArray = [];
 
             $('#dataTable tr').each(function (index, tr) {
@@ -163,10 +178,9 @@
                 colArray.push(cols)
             });
 
-            $.post( "pages/store", { data: colArray, sheet: 1})
-                .done(function( data ) {
-                    // if(status === true)
-                    //     alert(data['message']);
+            $.post( "pages/store", { data: colArray, sheet: sheetNumber})
+                .done(function() {
+                    alert('Data has been successfully saved!')
                 });
         })
     });

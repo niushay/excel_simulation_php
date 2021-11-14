@@ -81,4 +81,28 @@ class Data {
         return $data;
     }
 
+    public function createSheetTable($sheetNumber)
+    {
+        $createTableSheet = "Create TABLE IF NOT EXISTS  sheets (id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY, sheet VARCHAR(255) NOT NULL);";
+        $this->db->query($createTableSheet);
+        $this->db->execute();
+    }
+
+    public function storeCreatedSheets($sheetNumber)
+    {
+        $storeNumber = "INSERT INTO sheets (sheet) VALUES ({$sheetNumber})";
+        $this->db->query($storeNumber);
+        $this->db->execute();
+    }
+
+    public function getNumberOfSheets()
+    {
+        $stmt = "SELECT DISTINCT sheet FROM sheets";
+        $this -> db -> query($stmt);
+        $sheets = $this -> db -> resultSet();
+
+        return $sheets;
+    }
+
+
 }
