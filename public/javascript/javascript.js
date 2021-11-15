@@ -1,5 +1,6 @@
 $(document).ready(function() {
-    var url = "http://localhost/excel_simulation/"
+    var url = window.location.href
+    var splitUrl = url.split("/")
 
     // Add row button
     $("#addNewRow").click(function(){
@@ -39,7 +40,6 @@ $(document).ready(function() {
     $("#addNewSheet").click(function(){
         let lastColumnNumber = $("#sheetTable td").length
         lastColumnNumber++
-        console.log(lastColumnNumber)
 
         $('#sheetTable tr').each(function(key) {
             if(key===0){
@@ -52,7 +52,7 @@ $(document).ready(function() {
         $("#excelSheetFirstHeader").attr('colSpan', lastColumnNumber + 1);
         $("#excelSheetFirstHeader+ th").remove();
 
-        $.post( url + "pages/createSheet", { sheet: lastColumnNumber}).done(function( data ) {
+        $.post( splitUrl[3] + "pages/createSheet", { sheet: lastColumnNumber}).done(function( data ) {
         })
 
     })
@@ -78,7 +78,7 @@ $(document).ready(function() {
             colArray.push(cols)
         });
 
-        $.post(  url + "pages/store", { data: colArray, sheet: sheetNumber})
+        $.post(  splitUrl[3] + "pages/store", { data: colArray, sheet: sheetNumber})
             .done(function() {
                 alert('Data has been successfully saved!')
             });
