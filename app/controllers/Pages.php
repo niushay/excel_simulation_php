@@ -15,9 +15,9 @@
             if ($data == false){
                 $data = [
                     'items' => [
-                        [1,'Text', 'Text', 'Text'],
-                        [2,'Text', 'Text', 'Text'],
-                        [3,'Text', 'Text', 'Text']
+                        ['id'=> 1,'Text', 'Text', 'Text'],
+                        ['id'=>2,'Text', 'Text', 'Text'],
+                        ['id'=>3,'Text', 'Text', 'Text']
                     ],
                     'numberOfCols' => 4,
                     'sheetNumber' => $sheetNumber
@@ -37,8 +37,6 @@
             $data['sheets'] = $this->dataModel->getNumberOfSheets();
 
             //create sheet table
-//            $this->createSheet(1);
-
             $this -> view('pages/index', $data);
         }
 

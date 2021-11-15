@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    var url = window.location.href
+    var url = "http://localhost/excel_simulation/"
 
     // Add row button
     $("#addNewRow").click(function(){
