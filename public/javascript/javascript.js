@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    var url = window.location.href
+
     // Add row button
     $("#addNewRow").click(function(){
         let lastRowNumber = Number($("#dataTable tr:last th").text());
@@ -50,10 +52,7 @@ $(document).ready(function() {
         $("#excelSheetFirstHeader").attr('colSpan', lastColumnNumber + 1);
         $("#excelSheetFirstHeader+ th").remove();
 
-        $.post( "pages/createSheet", { sheet: lastColumnNumber}).done(function( data ) {
-            //merge columns in the header
-            // $("#excelSheetFirstHeader").attr('colSpan', lastColumnNumber + 1);
-            // $("#excelSheetFirstHeader+ th").remove();
+        $.post( url + "pages/createSheet", { sheet: lastColumnNumber}).done(function( data ) {
         })
 
     })
@@ -79,7 +78,7 @@ $(document).ready(function() {
             colArray.push(cols)
         });
 
-        $.post( "pages/store", { data: colArray, sheet: sheetNumber})
+        $.post(  url + "pages/store", { data: colArray, sheet: sheetNumber})
             .done(function() {
                 alert('Data has been successfully saved!')
             });

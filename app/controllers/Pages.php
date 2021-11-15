@@ -46,7 +46,6 @@
         {
             //Get Data
            $data = $_POST;
-           print_r($data);
 
             //Create data Table
             $this -> dataModel -> createTable($data);

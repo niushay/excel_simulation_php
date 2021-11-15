@@ -4,9 +4,8 @@
     const DB_USER = 'root';
     const DB_PASS = '';
     const DB_NAME = 'ozan';
+    const FOLDER_NAME = 'ozan';
 
-    define('APPROOT', dirname(dirname(__FILE__)));
-
-    const URLROOT = 'http://localhost/ozan/';
+    const URLROOT = 'http://localhost/'. FOLDER_NAME . '/';
 
     const SITENAME = 'Ozan';
